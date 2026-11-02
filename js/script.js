@@ -87,9 +87,6 @@ function displayNASAImages(images) {
         const date = document.createElement("p");
         date.textContent = image.date || "";
 
-        card.appendChild(title);
-        card.appendChild(date);
-
         const imageUrl = image.hdurl || image.url;
 
         if (image.media_type === "image" && imageUrl) {
@@ -118,6 +115,8 @@ function displayNASAImages(images) {
             card.appendChild(link);
         }
 
+        card.appendChild(title);
+        card.appendChild(date);
         gallery.appendChild(card);
     });
 
@@ -136,7 +135,11 @@ function openImageModal(image, imageUrl) {
 }
 
 function cleanExplanation(text) {
-    return String(text || "")
+    const plainText = new DOMParser()
+        .parseFromString(String(text || ""), "text/html")
+        .body.textContent || "";
+
+    return plainText
         .replace(/^\s*explanation\s*:\s*/i, "")
         .replace(/\s*\bTomorrow(?:'|\u2019)s\s+(?:picture|image)\b[\s\S]*$/i, "")
     .replace(/\b(?:read more|for more information|more information|visit|source|url|link)\s*:?\s*(?=https?:\/\/|www\.)/gi, "")
