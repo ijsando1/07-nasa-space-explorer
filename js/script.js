@@ -88,7 +88,7 @@ function displayNASAImages(images) {
         date.textContent = image.date || "";
 
         const explanation = document.createElement("p");
-        explanation.textContent = image.explanation || "";
+        explanation.textContent = cleanExplanation(image.explanation);
 
         card.appendChild(title);
         card.appendChild(date);
@@ -135,6 +135,15 @@ function openImageModal(image, imageUrl) {
     modalImage.alt = image.alt || image.title || "NASA astronomy image";
     modalTitle.textContent = image.title || "Untitled";
     modalDate.textContent = image.date || "";
-    modalExplanation.textContent = image.explanation || "No explanation is available.";
+    modalExplanation.textContent = cleanExplanation(image.explanation) || "No explanation is available.";
     imageModal.showModal();
+}
+
+function cleanExplanation(text) {
+    return String(text || "")
+    .replace(/\b(?:read more|for more information|more information|visit|source|url|link)\s*:?\s*(?=https?:\/\/|www\.)/gi, "")
+        .replace(/\b(?:https?:\/\/|www\.)\S+/gi, "")
+    .replace(/\s+\b(?:and|or)\b(?=\s*(?:[.!?,;:]|$))/gi, "")
+        .replace(/\s+/g, " ")
+        .trim();
 }
