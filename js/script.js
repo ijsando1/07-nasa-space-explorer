@@ -64,8 +64,11 @@ async function fetchNASAImages() {
 
         // Support either a single object or an array
         const images = Array.isArray(data) ? data : [data];
+        const matchingImages = images.filter((image) =>
+            image.date >= startDate && image.date <= endDate
+        );
 
-        displayNASAImages(images);
+        displayNASAImages(matchingImages);
 
     } catch (error) {
         console.error("NASA API error:", error);
