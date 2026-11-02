@@ -7,7 +7,7 @@
 
 /* Base page styles */
 body {
-  font-family: Arial, sans-serif;
+  font-family: "Public Sans", sans-serif;
   background-color: #f1f1f1;
   padding: 20px;
 }
@@ -29,7 +29,7 @@ body {
 }
 
 h1 {
-  font-family: Verdana, sans-serif;
+  font-family: "Public Sans", sans-serif;
   font-weight: bold;
   color: #212121;
 }
@@ -53,7 +53,7 @@ h1 {
 /* Inputs and buttons */
 input[type="date"],
 button {
-  font-family: Arial, sans-serif;
+  font-family: "Public Sans", sans-serif;
   font-weight: normal;
   color: #666;
   padding: 10px 15px;
@@ -110,6 +110,15 @@ button:hover {
   flex-direction: column;
 }
 
+.gallery-item[role="button"] {
+  cursor: pointer;
+}
+
+.gallery-item[role="button"]:focus-visible {
+  outline: 3px solid #1769aa;
+  outline-offset: 3px;
+}
+
 /* Three columns on wider screens */
 @media (min-width: 1000px) {
   .gallery-item {
@@ -122,6 +131,12 @@ button:hover {
   height: 200px;
   object-fit: cover;
   border-radius: 4px;
+  transition: transform 250ms ease;
+}
+
+.gallery-item:hover img,
+.gallery-item:focus-visible img {
+  transform: scale(1.05);
 }
 
 .gallery-item p {
@@ -141,4 +156,85 @@ button:hover {
 .placeholder-icon {
   font-size: 48px;
   margin-bottom: 20px;
+}
+
+/* Image details modal */
+.image-modal {
+  position: fixed;
+  width: min(900px, calc(100vw - 32px));
+  max-width: none;
+  max-height: calc(100vh - 32px);
+  margin: auto;
+  padding: 0;
+  overflow: auto;
+  border: 0;
+  border-radius: 8px;
+  background: white;
+  color: #212121;
+}
+
+.image-modal::backdrop {
+  background: rgba(0, 0, 0, 0.75);
+}
+
+.image-modal > img {
+  display: block;
+  width: 100%;
+  max-height: min(68vh, 720px);
+  object-fit: contain;
+  background: #111;
+}
+
+.modal-details {
+  padding: 20px;
+}
+
+.modal-details h2 {
+  margin-bottom: 8px;
+  padding-right: 72px;
+  overflow-wrap: anywhere;
+}
+
+.modal-date {
+  margin-bottom: 14px;
+  color: #555;
+}
+
+.modal-details p {
+  line-height: 1.6;
+}
+
+.modal-close {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  width: auto;
+  z-index: 1;
+  border-color: #ccc;
+  background: white;
+  color: #222;
+}
+
+.modal-close:hover {
+  background: #eee;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .gallery-item img {
+    transition: none;
+  }
+}
+
+@media (max-width: 600px) {
+  .image-modal {
+    max-height: calc(100vh - 20px);
+  }
+
+  .image-modal > img {
+    max-height: 55vh;
+  }
+
+  .modal-details {
+    padding: 16px;
+  }
 }
