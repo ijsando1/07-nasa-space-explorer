@@ -43,7 +43,7 @@ async function fetchNASAImages() {
         return;
     }
 
-    gallery.innerHTML = "<p>Loading NASA images...</p>";
+    gallery.innerHTML = "<p>🪐🌠Loading NASA images...🌠🪐</p>";
 
     try {
         const url = new URL(
