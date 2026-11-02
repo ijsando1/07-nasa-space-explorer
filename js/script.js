@@ -109,13 +109,36 @@ function displayNASAImages(images) {
                     openImageModal(image, imageUrl);
                 }
             });
+        } else if (image.media_type === "video") {
+            const videoUrl = image.url || image.permalink;
+
+            if (videoUrl) {
+                const link = document.createElement("a");
+                link.href = videoUrl;
+                link.textContent = "Watch NASA video";
+                link.target = "_blank";
+                link.rel = "noopener noreferrer";
+                card.appendChild(link);
+            } else {
+                const message = document.createElement("p");
+                message.textContent = "Video link unavailable.";
+                card.appendChild(message);
+            }
         } else {
             const link = document.createElement("a");
-            link.href = image.permalink || image.url;
-            link.textContent = "View NASA image or video";
-            link.target = "_blank";
-            link.rel = "noopener noreferrer";
-            card.appendChild(link);
+            const mediaUrl = image.permalink || image.url;
+
+            if (mediaUrl) {
+                link.href = mediaUrl;
+                link.textContent = "View NASA media";
+                link.target = "_blank";
+                link.rel = "noopener noreferrer";
+                card.appendChild(link);
+            } else {
+                const message = document.createElement("p");
+                message.textContent = "Media unavailable.";
+                card.appendChild(message);
+            }
         }
 
         card.appendChild(title);
