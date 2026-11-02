@@ -87,9 +87,6 @@ function displayNASAImages(images) {
         const date = document.createElement("p");
         date.textContent = image.date || "";
 
-        const explanation = document.createElement("p");
-        explanation.textContent = cleanExplanation(image.explanation);
-
         card.appendChild(title);
         card.appendChild(date);
 
@@ -121,7 +118,6 @@ function displayNASAImages(images) {
             card.appendChild(link);
         }
 
-        card.appendChild(explanation);
         gallery.appendChild(card);
     });
 
@@ -141,6 +137,8 @@ function openImageModal(image, imageUrl) {
 
 function cleanExplanation(text) {
     return String(text || "")
+        .replace(/^\s*explanation\s*:\s*/i, "")
+        .replace(/\s*\bTomorrow(?:'|\u2019)s\s+(?:picture|image)\b[\s\S]*$/i, "")
     .replace(/\b(?:read more|for more information|more information|visit|source|url|link)\s*:?\s*(?=https?:\/\/|www\.)/gi, "")
         .replace(/\b(?:https?:\/\/|www\.)\S+/gi, "")
     .replace(/\s+\b(?:and|or)\b(?=\s*(?:[.!?,;:]|$))/gi, "")
